@@ -33,6 +33,10 @@ angular.module('$app')
 
   .controller('NetworkUserCtrl', function($scope, User) {
     $scope.user = User.getById($routeParams.userId); // will used existing data previously fetch by `query()`
+    // longer equivalent
+    $scope.user = User.find(function(user) {
+       return user._id = $routeParams.userId;
+    });
   });
 ```
 
