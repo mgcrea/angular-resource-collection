@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git://github.com/angular-strap/angular-resource-collection.git"
   },
-  "main": "./angular-resource-collection.js",
+  "main": "./resource-collection.js",
   "dependencies": {
     "angular-resource-unstable": "latest"
   }
