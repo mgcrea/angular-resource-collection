@@ -52,11 +52,9 @@ $ bower install angular-resource-collection --save
 
 + Include the required libraries (cdn/local):
 
-> The library will work out of the box with AngularJS 1.2.0, for now, it requires the latest revision from master (unstable 1.1.5 won't work)
-
 >
 ``` html
-<script src="components/angular-resource-unstable/angular-resource.min.js"></script>
+<script src="components/angular-resource-master/angular-resource.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/1.3.1/lodash.min.js"></script>
 <!-- or "//cdnjs.cloudflare.com/ajax/libs/underscore.js/1.4.4/underscore-min.js" -->
 ```

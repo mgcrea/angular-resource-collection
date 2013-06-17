@@ -10,6 +10,6 @@
   },
   "main": "./resource-collection.js",
   "dependencies": {
-    "angular-resource-unstable": "latest"
+    "angular-resource-master": "latest"
   }
 }
