@@ -3,7 +3,7 @@
 
 angular.module('resourceCollection', ['ngResource'])
 
-  .factory('$collection', function($resource, $q) {
+  .factory('$collection', function($resource, $filter, $q) {
 
     var slice = Array.prototype.slice;
     var splice = Array.prototype.splice;
@@ -13,12 +13,13 @@ angular.module('resourceCollection', ['ngResource'])
     var CollectionFactory = function(url, paramDefaults, actions) {
 
       var collection = $resource(url, paramDefaults, actions);
-
       var parentQuery = collection.query;
+      // var filter = $filter('filter');
+
       extend(collection, {
         models: [],
         query: function() {
-          var value = parentQuery();
+          var value = parentQuery.apply(this, arguments);
           this.models = value.$promise;
           return value;
         },
