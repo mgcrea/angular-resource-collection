@@ -17,17 +17,24 @@ angular.module('resourceCollection', ['ngResource'])
       // var filter = $filter('filter');
 
       extend(collection, {
+
+        idAttribute: '_id',
+
         models: [],
+
         query: function() {
           var value = parentQuery.apply(this, arguments);
           this.models = value.$promise;
           return value;
         },
+
         getById: function(id) {
+          var self = this;
           return this.find(function(v, k) {
-            return v._id === id;
+            return v[self.idAttribute] === id;
           });
         }
+
       });
 
       // Underscore methods that we want to implement on the Collection.
