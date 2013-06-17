@@ -1,7 +1,15 @@
+/**
+ * ngResourceCollection - Backbone-like collections for AngularJS resources
+ * @version v0.2.0 - 2013-06-17
+ * @link http://mgcrea.github.com/angular-pull-to-refresh
+ * @author Olivier Louvignes <olivier@mg-crea.com>
+ * @license MIT License, http://www.opensource.org/licenses/MIT
+ */
+
 'use strict';
 /* global _ */
 
-angular.module('resourceCollection', ['ngResource'])
+angular.module('mgcrea.resourceCollection', ['ngResource'])
 
   .factory('$collection', function($resource, $filter, $q) {
 

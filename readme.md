@@ -14,34 +14,6 @@ var methods = ['forEach', 'each', 'map', 'collect', 'reduce', 'foldl',
 
 
 
-## Examples
-
-The main use case it to be able to do:
-
-``` javascript
-'use strict';
-
-angular.module('$app')
-
-  .factory('User', function($collection) {
-    return $collection(REMOTE_URL + '/users/:userId?login=pocus');
-  })
-
-  .controller('NetworkCtrl', function($scope, User) {
-    $scope.users = User.query().$promise;
-  })
-
-  .controller('NetworkUserCtrl', function($scope, User) {
-    $scope.user = User.getById($routeParams.userId); // will used existing data previously fetch by `query()`
-    // longer equivalent
-    $scope.user = User.find(function(user) {
-       return user._id = $routeParams.userId;
-    });
-  });
-```
-
-
-
 ## Quick start
 
 + Install the module with [bower](http://bower.io/)
@@ -63,7 +35,35 @@ $ bower install angular-resource-collection --save
 
 >
 ``` javascript
-var app = angular.module('myApp', ['resourceCollection']);
+var app = angular.module('myApp', ['mgcrea.resourceCollection']);
+```
+
+
+
+## Examples
+
+The main use case it to be able to do:
+
+``` javascript
+'use strict';
+
+angular.module('myApp')
+
+  .factory('User', function($collection) {
+    return $collection(REMOTE_URL + '/users/:userId?login=pocus');
+  })
+
+  .controller('NetworkCtrl', function($scope, User) {
+    $scope.users = User.query().$promise;
+  })
+
+  .controller('NetworkUserCtrl', function($scope, User) {
+    $scope.user = User.getById($routeParams.userId); // will used existing data previously fetch by `query()`
+    // longer equivalent
+    $scope.user = User.find(function(user) {
+       return user._id = $routeParams.userId;
+    });
+  });
 ```
 
 
