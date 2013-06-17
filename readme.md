@@ -52,6 +52,8 @@ $ bower install angular-resource-collection --save
 
 + Include the required libraries (cdn/local):
 
+> The library will work out of the box with AngularJS 1.2.0, for now, it requires the latest revision from master (unstable 1.1.5 won't work)
+
 >
 ``` html
 <script src="components/angular-resource-unstable/angular-resource.min.js"></script>
