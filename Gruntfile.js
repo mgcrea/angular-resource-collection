@@ -127,8 +127,8 @@ module.exports = function (grunt) {
 
   grunt.registerTask('build', [
     'clean:dist',
-    'less:dist',
-    'cssmin:dist',
+    // 'less:dist',
+    // 'cssmin:dist',
     'ngmin:dist',
     'uglify:dist'
   ]);

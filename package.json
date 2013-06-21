@@ -3,7 +3,7 @@
   "description": "ngResourceCollection - Backbone-like collections for AngularJS resources",
   "author": "Olivier Louvignes <olivier@mg-crea.com>",
   "main": "./dist/resource-collection.min.js",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "dependencies": {
     "grunt": "~0.4.1"
   },
