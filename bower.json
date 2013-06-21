@@ -1,14 +1,14 @@
 {
-  "author": "Olivier Louvignes",
   "name": "angular-resource-collection",
-  "description": "AngularResourceCollection - Backbone-like collections for AngularJS resources",
+  "description": "ngResourceCollection - Backbone-like collections for AngularJS resources",
+  "author": "Olivier Louvignes <olivier@mg-crea.com>",
+  "main": "./dist/resource-collection.min.js",
   "version": "0.2.0",
   "homepage": "http://mgcrea.github.com/angular-resource-collection",
   "repository": {
     "type": "git",
     "url": "git://github.com/angular-strap/angular-resource-collection.git"
   },
-  "main": "./resource-collection.js",
   "dependencies": {
     "angular-resource-master": "latest"
   }
