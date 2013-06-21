@@ -3,7 +3,8 @@ angular.module('mgcrea.resourceCollection', ['ngResource']).factory('$collection
   '$resource',
   '$filter',
   '$q',
-  function ($resource, $filter, $q) {
+  '$timeout',
+  function ($resource, $filter, $q, $timeout) {
     var slice = Array.prototype.slice;
     var splice = Array.prototype.splice;
     var extend = angular.extend;
@@ -11,13 +12,22 @@ angular.module('mgcrea.resourceCollection', ['ngResource']).factory('$collection
     var CollectionFactory = function (url, paramDefaults, actions) {
       var collection = $resource(url, paramDefaults, actions);
       var parentQuery = collection.query;
+      var deferred = $q.defer();
       extend(collection, {
         idAttribute: '_id',
-        models: [],
+        $resolved: false,
+        $promise: deferred.promise,
+        $models: deferred.promise,
         query: function () {
-          var value = parentQuery.apply(this, arguments);
-          this.models = value.$promise;
-          return value;
+          var self = this;
+          parentQuery.apply(this, arguments).$promise.then(function (res) {
+            self.$resolved = true;
+            if (!self.$models.$$v)
+              deferred.resolve(res.$promise);
+            else
+              self.$models.$$v = res;
+          });
+          return this;
         },
         getById: function (id) {
           var self = this;
@@ -71,7 +81,7 @@ angular.module('mgcrea.resourceCollection', ['ngResource']).factory('$collection
           throw 'Unknown _.' + method + ' method.';
         collection[method] = function () {
           var args = slice.call(arguments);
-          return $q.when(collection.models, function (models) {
+          return $q.when(collection.$models.$$v || collection.$models, function (models) {
             args.unshift(models);
             return _[method].apply(_, args);
           });
