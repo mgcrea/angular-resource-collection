@@ -1,17 +1,9 @@
-/**
- * ngResourceCollection - Backbone-like collections for AngularJS resources
- * @version v0.2.0 - 2013-06-17
- * @link http://mgcrea.github.com/angular-pull-to-refresh
- * @author Olivier Louvignes <olivier@mg-crea.com>
- * @license MIT License, http://www.opensource.org/licenses/MIT
- */
-
 'use strict';
 /* global _ */
 
 angular.module('mgcrea.resourceCollection', ['ngResource'])
 
-  .factory('$collection', function($resource, $filter, $q) {
+  .factory('$collection', function($resource, $filter, $q, $timeout) {
 
     var slice = Array.prototype.slice;
     var splice = Array.prototype.splice;
@@ -22,18 +14,27 @@ angular.module('mgcrea.resourceCollection', ['ngResource'])
 
       var collection = $resource(url, paramDefaults, actions);
       var parentQuery = collection.query;
+      var deferred = $q.defer();
       // var filter = $filter('filter');
 
       extend(collection, {
 
         idAttribute: '_id',
 
-        models: [],
+        // provide a compatible query() result layer
+        $resolved: false,
+        $promise: deferred.promise,
+        $models: deferred.promise,
 
         query: function() {
-          var value = parentQuery.apply(this, arguments);
-          this.models = value.$promise;
-          return value;
+          var self = this;
+          parentQuery.apply(this, arguments).$promise
+          .then(function(res) {
+            self.$resolved = true;
+            if(!self.$models.$$v) deferred.resolve(res.$promise);
+            else self.$models.$$v = res;
+          });
+          return this;
         },
 
         getById: function(id) {
@@ -58,7 +59,7 @@ angular.module('mgcrea.resourceCollection', ['ngResource'])
         if(!angular.isDefined(_[method])) throw 'Unknown _.' + method + ' method.';
         collection[method] = function() {
           var args = slice.call(arguments);
-          return $q.when(collection.models, function(models) {
+          return $q.when(collection.$models.$$v || collection.$models, function(models) {
             args.unshift(models);
             return _[method].apply(_, args);
           });
