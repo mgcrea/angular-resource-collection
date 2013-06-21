@@ -1,7 +1,10 @@
 # [ngResourceCollection](http://mgcrea.github.com/angular-resource-collection) [![Build Status](https://secure.travis-ci.org/mgcrea/angular-resource-collection.png?branch=master)](http://travis-ci.org/#!/mgcrea/angular-resource-collection)
 
 ngResourceCollection is a thin wrapper over the official 1.2.0+ [ngCollection](https://github.com/angular/angular.js/blob/master/src/ngResource/resource.js).
-It adds a few useful methods to work with your `$resource` data, along every underscore/lodash method available:
+
+Its main purpose is to provide an efficient global caching system over `$resource.query()` that is not reset between each client-side route-navigation (no view flickering). You can also leverage 1.2.0+ `track by` attribute for the `ngRepeat` directive to minimize DOM manipulation on collection refresh.
+
+It also adds a few useful methods to work with your `$resource` data, along every underscore/lodash method available:
 
 ``` javascript
 var methods = ['forEach', 'each', 'map', 'collect', 'reduce', 'foldl',
@@ -54,11 +57,11 @@ angular.module('myApp')
   })
 
   .controller('NetworkCtrl', function($scope, User) {
-    $scope.users = User.query().$promise;
+    $scope.users = User.query().$promise; // will leverage existing data before reloading with `query()`
   })
 
   .controller('NetworkUserCtrl', function($scope, User) {
-    $scope.user = User.getById($routeParams.userId); // will used existing data previously fetch by `query()`
+    $scope.user = User.getById($routeParams.userId); // will use existing data previously fetched by `query()` in another route
     // longer equivalent
     $scope.user = User.find(function(user) {
        return user._id = $routeParams.userId;
